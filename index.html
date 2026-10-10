@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Michael Jackson AR - Moonwalk (Hiro Marker)</title>
+    <!-- 1. นำเข้า A-Frame และ AR.js สำหรับ Web AR -->
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+      /* สไตล์สำหรับข้อความแนะนำผู้ใช้ขณะกำลังโหลดหรือส่องกล้อง */
+      #ar-instructions {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-family: sans-serif;
+        font-size: 14px;
+        z-index: 999;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body style="margin: 0; overflow: hidden;">
+    
+    <div id="ar-instructions">
+      ส่องกล้องไปที่ <b>มาร์คเกอร์ Hiro</b> เพื่อชม Michael Jackson เต้น Moonwalk!
+    </div>
+
+    <!-- 2. ตั้งค่าฉาก AR ด้วย A-Frame และ AR.js -->
+    <a-scene 
+      embedded 
+      arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+      renderer="logarithmicDepthBuffer: true;"
+      vr-mode-ui="enabled: false">
+
+      <!-- โหลด Asset ล่วงหน้า (ถ้ามีโมเดล 3D ภายนอก สามารถใส่ไว้ที่นี่) -->
+      <a-assets>
+        <!-- ตัวอย่างการใช้รูปภาพหรือโมเดลเสริม หากต้องการ -->
+      </a-assets>
+
+      <!-- 3. กำหนดให้แสดงผลเมื่อพบมาร์คเกอร์ hiro -->
+      <a-marker preset="hiro">
+        
+        <!-- กลุ่มวัตถุจำลองตัวละคร Michael Jackson -->
+        <a-entity position="0 0 0" scale="1 1 1">
+
+          <!-- แอนิเมชันจำลองการเคลื่อนที่ถอยหลัง (Moonwalk) บนมาร์คเกอร์ -->
+          <a-animation 
+            attribute="position" 
+            dur="3000" 
+            direction="alternate" 
+            repeat="indefinite" 
+            from="0 0 0" 
+            to="0 0 -0.8" 
+            easing="linear">
+          </a-animation>
+
+          <!-- ส่วนหัว: หมวกเฟโดราสีดำ (Fedora Hat) -->
+          <a-cylinder position="0 1.5 0" radius="0.25" height="0.05" color="#111111"></a-cylinder>
+          <a-cylinder position="0 1.65 0" radius="0.18" height="0.25" color="#111111"></a-cylinder>
+
+          <!-- ส่วนลำตัว: เสื้อแจ็คเก็ตแนวทหาร/แจ็คเก็ตสีแดง (Red Thriller Jacket) -->
+          <a-box position="0 1.0 0" width="0.45" height="0.6" depth="0.25" color="#cc0000"></a-box>
+          <!-- ดีเทลเข็มขัดและแถบเสื้อสีดำ -->
+          <a-box position="0 0.75 0" width="0.46" height="0.08" depth="0.26" color="#111111"></a-box>
+
+          <!-- แขนซ้าย และ ถุงมือสีขาวประดับเพชรข้างเดียว (White Glove) -->
+          <a-box position="-0.3 1.0 0" width="0.12" height="0.5" depth="0.12" color="#cc0000" rotation="0 0 15"></a-box>
+          <a-sphere position="-0.35 0.72 0" radius="0.07" color="#ffffff" material="emissive: #ffffff; emissiveIntensity: 0.5;"></a-sphere>
+
+          <!-- แขนขวา -->
+          <a-box position="0.3 1.0 0" width="0.12" height="0.5" depth="0.12" color="#cc0000" rotation="0 0 -15"></a-box>
+
+          <!-- ขาและถุงเท้าสีขาวข้อสูงคู่กับรองเท้าโลฟเฟอร์สีดำ -->
+          <!-- ขาซ้าย -->
+          <a-cylinder position="-0.12 0.35 0" radius="0.07" height="0.5" color="#111111"></a-cylinder>
+          <a-cylinder position="-0.12 0.25 0" radius="0.075" height="0.1" color="#ffffff"></a-cylinder> <!-- ถุงเท้าขาว -->
+          <a-box position="-0.12 0.05 0.05" width="0.1" height="0.08" depth="0.2" color="#000000"></a-box> <!-- รองเท้าดำ -->
+
+          <!-- ขาขวา (ทำท่าก้าวขาเหลื่อมกันสำหรับ Moonwalk) -->
+          <a-cylinder position="0.12 0.35 -0.1" radius="0.07" height="0.5" color="#111111" rotation="15 0 0"></a-cylinder>
+          <a-cylinder position="0.12 0.25 -0.08" radius="0.075" height="0.1" color="#ffffff"></a-cylinder> <!-- ถุงเท้าขาว -->
+          <a-box position="0.12 0.02 0.0" width="0.1" height="0.08" depth="0.2" color="#000000"></a-box> <!-- รองเท้าดำ -->
+
+        </a-entity>
+
+      </a-marker>
+
+      <!-- กล้องมองภาพ AR -->
+      <a-entity camera></a-entity>
+
+    </a-scene>
+  </body>
+</html>
